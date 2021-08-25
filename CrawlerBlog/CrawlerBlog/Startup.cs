@@ -1,7 +1,9 @@
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +30,8 @@ namespace CrawlerBlog
         {
 
             services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>(
+options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrawlerBlog", Version = "v1" });
