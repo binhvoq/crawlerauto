@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "d8Kk+FFz/LgHYmUx+zU0XQMfShwMcxybCoLGrlR+FxrkmUh5hPdTYGYa8DY7MpFnVFHHDV50XMue2flIs7bBJQ==",
+  "dgSpecHash": "YnuPIFDH96gx4aUxD8vpATpBuu2nPdk5jg4WACUpoWDm4J5BbAVARdQewitM8Y+XUTbAox7zof8lCex1ZJ3Rhw==",
   "success": true,
   "projectFilePath": "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\CrawlerBlog\\CrawlerBlog.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\QUOC BINH\\.nuget\\packages\\htmlagilitypack\\1.11.36\\htmlagilitypack.1.11.36.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
