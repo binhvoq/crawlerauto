@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "YoWP7VkrbHgimMqmP2vr9koTxfxs77Qffpt/HOVwqjMv4epbHgJUb+ZdGXago14OHYXB8lGepBLemYv+B2R1LA==",
+  "dgSpecHash": "8EG5SRoDQi/MgEmhMr0gFTpCAb+sk7/aAAATsZg6GWi/SHhrEekuE9X/l7it1aah02RiZyshI79xtsyg4zijrQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\CrawlerBlog\\CrawlerBlog.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
+    "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",

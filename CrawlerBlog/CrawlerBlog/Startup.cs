@@ -1,4 +1,5 @@
 using Infrastructure.Data;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace CrawlerBlog
         {
 
             services.AddControllers();
+            services.AddMediatR();
             services.AddDbContext<ApplicationDbContext>(
 options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddSwaggerGen(c =>
@@ -58,6 +60,21 @@ options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDb
             {
                 endpoints.MapControllers();
             });
+        }
+
+    }
+    static class CustomExtensionsMethods
+    {
+        public static IServiceCollection AddMediatR(this IServiceCollection services)
+        {
+            services.AddMediatR(typeof(Startup));
+
+            //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TracingBehavior<,>));
+            //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+            //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ActivityLogBehavior<,>));
+
+            return services;
         }
     }
 }

@@ -65,3 +65,5 @@ C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\obj\Debug\n
 C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\obj\Debug\net5.0\ref\CrawlerBlog.dll
 C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\obj\Debug\net5.0\CrawlerBlog.pdb
 C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\obj\Debug\net5.0\CrawlerBlog.genruntimeconfig.cache
+C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\bin\Debug\net5.0\MediatR.dll
+C:\Users\QUOC BINH\Desktop\MyWeb\crawlerauto\CrawlerBlog\CrawlerBlog\bin\Debug\net5.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
