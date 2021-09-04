@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
   </ItemGroup>
 
@@ -14,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Commands\" />
-    <Folder Include="UseCases\Queries\Handlers\" />
   </ItemGroup>
 
 </Project>
