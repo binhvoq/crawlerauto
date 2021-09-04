@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "25GEq+BuvX/L7p5D1j4nlhORzqSURxpfte+E2VLkj+KhdRW+JqS2S3y97jj/BX66z48ltYNbmM3zXw44zD5MtQ==",
+  "dgSpecHash": "3gKFwZtJgnanUXRpW43NKG22Yt6FoLwpRf52yZMxN2zlCFd4OO9gbQQWipbu41+Zlm2LQutOtYSFndlzKyRq7A==",
   "success": true,
   "projectFilePath": "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
+    "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.9\\microsoft.entityframeworkcore.5.0.9.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.9\\microsoft.entityframeworkcore.abstractions.5.0.9.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.9\\microsoft.entityframeworkcore.analyzers.5.0.9.nupkg.sha512",

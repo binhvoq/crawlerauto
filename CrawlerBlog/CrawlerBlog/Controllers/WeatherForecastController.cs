@@ -17,9 +17,10 @@ namespace CrawlerBlog.Controllers
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly ISender _mediator;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ISender mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet]

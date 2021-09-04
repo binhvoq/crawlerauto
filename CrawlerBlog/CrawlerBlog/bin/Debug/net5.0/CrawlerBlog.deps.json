@@ -1400,6 +1400,7 @@
         "dependencies": {
           "Domain": "1.0.0",
           "MediatR": "9.0.0",
+          "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.9"
         },
         "runtime": {
