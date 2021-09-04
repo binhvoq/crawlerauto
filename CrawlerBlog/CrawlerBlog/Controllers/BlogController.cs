@@ -1,4 +1,5 @@
-﻿using CrawlerAuto.Dto;
+﻿using Application.Dto;
+using CrawlerAuto.Dto;
 using Domain.Entities;
 using HtmlAgilityPack;
 using Infrastructure.Data;
@@ -95,16 +96,22 @@ namespace CrawlerBlog.Controllers
         }
 
         [HttpPost("getcmts")]
-        public async Task<ActionResult<List<Post>>> GetComments()
+        public async Task<ActionResult<List<ChangeListDto>>> GetComments()
         {
             var listPostUpdate = _context.Posts.ToList();
             if (listPostUpdate.Count <= 0) throw new Exception("Cannot get blog post list");
 
+            var changeList = new List<ChangeListDto>();
+
             foreach (var post in listPostUpdate)
             {
                 var listComments = await getNguoiLaoDongCommentAsync(post.cmtId);
-                post.totalComments = listComments.Count.ToString();
-                post.comments = (listComments.Count > 0) ? listComments : null;
+                var newTotalComments = listComments.Count.ToString() ?? null;
+
+                UpdateChangeList(changeList, post, newTotalComments); //do not change order
+
+                post.totalComments = newTotalComments;
+                post.comments = listComments;
                 _context.Entry(post).State = EntityState.Modified;
             }
 
@@ -117,7 +124,12 @@ namespace CrawlerBlog.Controllers
                 throw new DbUpdateException("Error when save Db");
             }
 
-            return Ok(listPostUpdate);
+            if (changeList.Count == 0)
+            {
+                return Ok("No comments are update");
+            }
+         
+            return Ok(changeList);
         }
 
         // PUT: api/BlogPosts/5
@@ -182,10 +194,11 @@ namespace CrawlerBlog.Controllers
         {
             List<Comment> listComments = new List<Comment>();
             using var client = new HttpClient();
+
             try
             {
                 var html = await client.GetStringAsync($"https://comment.nld.com.vn/ajax/ListComment-n{cmtId}-i1-s5-o1.htm");
-                if (String.IsNullOrEmpty(html)) return listComments;
+                if (String.IsNullOrEmpty(html)) throw new Exception("Html node return null");
 
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
@@ -204,16 +217,25 @@ namespace CrawlerBlog.Controllers
                     listComments.Add(cmt);
                 }
 
-                return listComments;
+                return (listComments.Count > 0) ? listComments : null;
             }
             catch (HttpRequestException exc) {
-                throw new Exception("API changed or wrong cmtId");
+                throw new HttpRequestException("API changed or wrong cmtId");
             }
             catch (Exception exc)
             {
                 throw new Exception("Error when get comment");
             }
 
+        }
+
+        private void UpdateChangeList(List<ChangeListDto> changeList, Post post, string newTotalComments) {
+            if (newTotalComments != post.totalComments) changeList.Add(new ChangeListDto
+            {
+                id = post.id,
+                title = post.title,
+                commentsUpdated = (post.totalComments ?? "0") + " -> " + newTotalComments
+            });
         }
     }
 }
