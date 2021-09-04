@@ -1,4 +1,5 @@
 using Application;
+using Infrastructure;
 using Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,7 @@ namespace CrawlerBlog
 
             services.AddControllers();
             services.AddApplication();
+            services.AddInfrastructure();
             services.AddDbContext<ApplicationDbContext>(
 options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddSwaggerGen(c =>
