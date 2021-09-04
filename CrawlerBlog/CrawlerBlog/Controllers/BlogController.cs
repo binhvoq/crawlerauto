@@ -106,12 +106,10 @@ namespace CrawlerBlog.Controllers
             foreach (var post in listPostUpdate)
             {
                 var listComments = await getNguoiLaoDongCommentAsync(post.cmtId);
-                var newTotalComments = listComments.Count.ToString() ?? null;
+                UpdateChangeList(changeList, post, listComments.Count.ToString()); //do not change order
 
-                UpdateChangeList(changeList, post, newTotalComments); //do not change order
-
-                post.totalComments = newTotalComments;
-                post.comments = listComments;
+                post.totalComments = listComments.Count.ToString();
+                post.comments = (listComments.Count > 0) ? listComments : null;
                 _context.Entry(post).State = EntityState.Modified;
             }
 
@@ -124,11 +122,15 @@ namespace CrawlerBlog.Controllers
                 throw new DbUpdateException("Error when save Db");
             }
 
+ 
+
             if (changeList.Count == 0)
             {
                 return Ok("No comments are update");
             }
          
+
+
             return Ok(changeList);
         }
 
@@ -194,11 +196,10 @@ namespace CrawlerBlog.Controllers
         {
             List<Comment> listComments = new List<Comment>();
             using var client = new HttpClient();
-
             try
             {
                 var html = await client.GetStringAsync($"https://comment.nld.com.vn/ajax/ListComment-n{cmtId}-i1-s5-o1.htm");
-                if (String.IsNullOrEmpty(html)) throw new Exception("Html node return null");
+                if (String.IsNullOrEmpty(html)) return listComments;
 
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
@@ -217,10 +218,10 @@ namespace CrawlerBlog.Controllers
                     listComments.Add(cmt);
                 }
 
-                return (listComments.Count > 0) ? listComments : null;
+                return listComments;
             }
             catch (HttpRequestException exc) {
-                throw new HttpRequestException("API changed or wrong cmtId");
+                throw new Exception("API changed or wrong cmtId");
             }
             catch (Exception exc)
             {
@@ -230,7 +231,7 @@ namespace CrawlerBlog.Controllers
         }
 
         private void UpdateChangeList(List<ChangeListDto> changeList, Post post, string newTotalComments) {
-            if (newTotalComments != post.totalComments) changeList.Add(new ChangeListDto
+            if (newTotalComments != post.totalComments && newTotalComments != "0") changeList.Add(new ChangeListDto
             {
                 id = post.id,
                 title = post.title,
