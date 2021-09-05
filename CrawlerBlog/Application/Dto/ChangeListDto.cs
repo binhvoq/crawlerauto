@@ -10,6 +10,7 @@ namespace Application.Dto
     {
         public string id { get; set; }
         public string title { get; set; }
+        public string uri { get; set; }
         public string commentsUpdated { get; set; }
     }
 }

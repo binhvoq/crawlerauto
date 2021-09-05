@@ -56,7 +56,6 @@ namespace CrawlerBlog.Controllers
 
             var html = @"https://nld.com.vn/";
 
-
             var nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
 
             if (nodes == null) throw new Exception("Classes changed or can not get html");
@@ -122,15 +121,11 @@ namespace CrawlerBlog.Controllers
                 throw new DbUpdateException("Error when save Db");
             }
 
- 
-
             if (changeList.Count == 0)
             {
                 return Ok("No comments are update");
             }
          
-
-
             return Ok(changeList);
         }
 
@@ -227,7 +222,6 @@ namespace CrawlerBlog.Controllers
             {
                 throw new Exception("Error when get comment");
             }
-
         }
 
         private void UpdateChangeList(List<ChangeListDto> changeList, Post post, string newTotalComments) {
