@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
@@ -12,10 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UseCases\Commands\" />
   </ItemGroup>
 
 </Project>

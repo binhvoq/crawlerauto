@@ -1618,6 +1618,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "Domain": "1.0.0",
+          "HtmlAgilityPack": "1.11.36",
           "MediatR": "9.0.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.9"

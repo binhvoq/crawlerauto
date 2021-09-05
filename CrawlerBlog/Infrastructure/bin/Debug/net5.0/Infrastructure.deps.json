@@ -18,6 +18,14 @@
           "Infrastructure.dll": {}
         }
       },
+      "HtmlAgilityPack/1.11.36": {
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {
+            "assemblyVersion": "1.11.36.0",
+            "fileVersion": "1.11.36.0"
+          }
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "runtime": {
           "lib/netstandard2.0/Humanizer.dll": {
@@ -1092,6 +1100,7 @@
       "Application/1.0.0": {
         "dependencies": {
           "Domain": "1.0.0",
+          "HtmlAgilityPack": "1.11.36",
           "MediatR": "9.0.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.9"
@@ -1112,6 +1121,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "HtmlAgilityPack/1.11.36": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dCuPhd6Mcdz0oyaSidPqZZiaKcVaBnIqCQlvgJx7Qr5PJAjSatSIVPmuOwpMjbtR8mqoXyUbWVKxuairGGauJg==",
+      "path": "htmlagilitypack/1.11.36",
+      "hashPath": "htmlagilitypack.1.11.36.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

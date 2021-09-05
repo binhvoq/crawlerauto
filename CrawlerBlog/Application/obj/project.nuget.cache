@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "3gKFwZtJgnanUXRpW43NKG22Yt6FoLwpRf52yZMxN2zlCFd4OO9gbQQWipbu41+Zlm2LQutOtYSFndlzKyRq7A==",
+  "dgSpecHash": "SWcmsb/lglbN3M1vHfboLanooV4SlYJc+rigeSm6ZSvQhdUN0Ko9zu0PH4aF4gHHzZAABSkkyCNXofkFjfiNZA==",
   "success": true,
   "projectFilePath": "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\Application\\Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\QUOC BINH\\.nuget\\packages\\htmlagilitypack\\1.11.36\\htmlagilitypack.1.11.36.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\QUOC BINH\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.9\\microsoft.entityframeworkcore.5.0.9.nupkg.sha512",
