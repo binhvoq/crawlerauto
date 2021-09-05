@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Application.Dto;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Commands
 {
-    public class AddPostCommand: IRequest<List<Post>>
+    public class AddCommentsCommand: IRequest<List<ChangeListDto>>
     {
     }
 }

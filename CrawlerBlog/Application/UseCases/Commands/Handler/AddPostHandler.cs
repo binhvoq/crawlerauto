@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Commands.Handler
 {
-    public class AddPostHandler : IRequestHandler<AddPostCommand, List<Post>>
+    public class AddPostHandler : IRequestHandler<AddPostsCommand, List<Post>>
     {
         private readonly IApplicationDbContext _context;
 
@@ -20,7 +20,7 @@ namespace Application.UseCases.Commands.Handler
             _context = context;
         }
 
-        public async Task<List<Post>> Handle(AddPostCommand request, CancellationToken cancellationToken)
+        public async Task<List<Post>> Handle(AddPostsCommand request, CancellationToken cancellationToken)
         {
             var html = @"https://nld.com.vn/";
 

@@ -57,42 +57,19 @@ namespace CrawlerBlog.Controllers
         [HttpPost("getpost")]
         public async Task<ActionResult<List<Post>>> AddBlogPost()
         {
-            return await _mediator.Send(new AddPostCommand());
+            var result = await _mediator.Send(new AddPostsCommand());
+
+            if (result.Count == 0) return Ok("No posts are update");
+            return result;
         }
 
         [HttpPost("getcmts")]
         public async Task<ActionResult<List<ChangeListDto>>> GetComments()
         {
-            var listPostUpdate = _context.Posts.ToList();
-            if (listPostUpdate.Count <= 0) throw new Exception("Cannot get blog post list");
+            var result = await _mediator.Send(new AddCommentsCommand());
 
-            var changeList = new List<ChangeListDto>();
-
-            foreach (var post in listPostUpdate)
-            {
-                var listComments = await getNguoiLaoDongCommentAsync(post.cmtId);
-                UpdateChangeList(changeList, post, listComments.Count.ToString()); //do not change order
-
-                post.totalComments = listComments.Count.ToString();
-                post.comments = (listComments.Count > 0) ? listComments : null;
-                _context.Entry(post).State = EntityState.Modified;
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                throw new DbUpdateException("Error when save Db");
-            }
-
-            if (changeList.Count == 0)
-            {
-                return Ok("No comments are update");
-            }
-         
-            return Ok(changeList);
+            if (result.Count == 0) return Ok("No comments are update");
+            return result;
         }
 
         // PUT: api/BlogPosts/5
