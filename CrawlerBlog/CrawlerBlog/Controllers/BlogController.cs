@@ -1,5 +1,6 @@
 ﻿using Application.Dto;
 using Application.UseCases.Commands;
+using Application.UseCases.Queries;
 using CrawlerAuto.Dto;
 using Domain.Entities;
 using HtmlAgilityPack;
@@ -34,24 +35,8 @@ namespace CrawlerBlog.Controllers
         [HttpGet("{pageIndex}")]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetBlogPost(int pageIndex)
         {
-            int pageSize = 8;
-            var skipItems = (pageIndex - 1) * pageSize;
-            var result = await _context.Posts.Include(c => c.comments).Select(x => new PostDto
-            {
-                id = x.id,
-                uri = x.uri,
-                title = x.title,
-                summary = x.summary,
-                totalComments = x.totalComments,
-                comments = x.comments.Select(cmt => new CommentDto
-                {
-                    author = cmt.author,
-                    content = cmt.content,
-                    numberLike = cmt.numberLike
-                }).ToList()
-            }).Skip(skipItems).Take(pageSize).ToListAsync();
-
-            return result;
+            var result = await _mediator.Send(new GetPostsQuery {pageIndex = pageIndex });
+            return Ok(result);
         }
 
         [HttpPost("getpost")]
