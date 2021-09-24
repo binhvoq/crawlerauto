@@ -4,6 +4,7 @@ using Domain.Entities;
 using HtmlAgilityPack;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,14 @@ namespace Application.UseCases.Commands.Handler
     public class AddCommentsHandler : IRequestHandler<AddCommentsCommand, List<ChangeListDto>>
     {
         private readonly IApplicationDbContext _context;
-        public AddCommentsHandler(IApplicationDbContext context) {
+        private readonly ILogger<AddCommentsHandler> _logger;
+        public AddCommentsHandler(IApplicationDbContext context, ILogger<AddCommentsHandler> logger) {
             _context = context;
+            _logger = logger;
         }
         public async Task<List<ChangeListDto>> Handle(AddCommentsCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogError("Binh123");
             var listPostUpdate = _context.Posts.ToList();
             if (listPostUpdate.Count <= 0) throw new Exception("Cannot get blog post list");
 
