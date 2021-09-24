@@ -32,14 +32,14 @@ namespace CrawlerBlog.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{pageIndex}")]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetBlogPost(int pageIndex)
+        [HttpPost("getpost")]
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetBlogPost(GetPostsQuery getPostsQuery)
         {
-            var result = await _mediator.Send(new GetPostsQuery {pageIndex = pageIndex });
+            var result = await _mediator.Send(getPostsQuery);
             return Ok(result);
         }
 
-        [HttpPost("getpost")]
+        [HttpPost("savepost")]
         public async Task<ActionResult<List<Post>>> AddBlogPost()
         {
             var result = await _mediator.Send(new AddPostsCommand());
@@ -48,7 +48,7 @@ namespace CrawlerBlog.Controllers
             return result;
         }
 
-        [HttpPost("getcmts")]
+        [HttpPost("savecmts")]
         public async Task<ActionResult<List<ChangeListDto>>> GetComments()
         {
             var result = await _mediator.Send(new AddCommentsCommand());

@@ -11,5 +11,6 @@ namespace Application.UseCases.Queries
     public class GetPostsQuery: IRequest<IEnumerable<PostDto>>
     {
        public int pageIndex { get; set; }
+       public int pageSize { get; set; }
     }
 }

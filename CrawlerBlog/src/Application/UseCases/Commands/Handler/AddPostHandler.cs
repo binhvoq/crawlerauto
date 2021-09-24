@@ -3,6 +3,7 @@ using Domain.Entities;
 using HtmlAgilityPack;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace Application.UseCases.Commands.Handler
     public class AddPostHandler : IRequestHandler<AddPostsCommand, List<Post>>
     {
         private readonly IApplicationDbContext _context;
+        private readonly ILogger<AddPostHandler> _logger;
 
-        public AddPostHandler(IApplicationDbContext context) {
+        public AddPostHandler(IApplicationDbContext context, ILogger<AddPostHandler> logger) {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<List<Post>> Handle(AddPostsCommand request, CancellationToken cancellationToken)
@@ -26,7 +29,11 @@ namespace Application.UseCases.Commands.Handler
 
             var nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
 
-            if (nodes == null) throw new Exception("Classes changed or can not get html");
+            if (nodes == null) {
+                var errorMessage = "Classes changed or can not get html";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
+            };
 
             List<Post> listBlogpost = new List<Post>();
 
@@ -56,7 +63,9 @@ namespace Application.UseCases.Commands.Handler
             }
             catch (DbUpdateException)
             {
-                throw new DbUpdateException("Error when save data");
+                var errorMessage = "Error when save data";
+                _logger.LogError(errorMessage);
+                throw new DbUpdateException(errorMessage);
             }
 
             return listBlogpost;

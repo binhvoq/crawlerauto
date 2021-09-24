@@ -19,15 +19,20 @@ namespace Application.UseCases.Commands.Handler
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<AddCommentsHandler> _logger;
-        public AddCommentsHandler(IApplicationDbContext context, ILogger<AddCommentsHandler> logger) {
+        public AddCommentsHandler(IApplicationDbContext context, ILogger<AddCommentsHandler> logger)
+        {
             _context = context;
             _logger = logger;
         }
         public async Task<List<ChangeListDto>> Handle(AddCommentsCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogError("Binh123");
             var listPostUpdate = _context.Posts.ToList();
-            if (listPostUpdate.Count <= 0) throw new Exception("Cannot get blog post list");
+            if (listPostUpdate.Count <= 0)
+            {
+                var errorMessage = "Cannot get blog post list";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
+            }
 
             var changeList = new List<ChangeListDto>();
 
@@ -47,7 +52,9 @@ namespace Application.UseCases.Commands.Handler
             }
             catch (DbUpdateException)
             {
-                throw new DbUpdateException("Error when save Db");
+                var errorMessage = "Error when save Db";
+                _logger.LogError(errorMessage);
+                throw new DbUpdateException(errorMessage);
             }
 
             return changeList;
