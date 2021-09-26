@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using Application.Interfaces;
 using Application.UseCases.Commands;
 using Application.UseCases.Queries;
 using CrawlerAuto.Dto;
@@ -23,10 +24,10 @@ namespace CrawlerBlog.Controllers
     [ApiController]
     public class BlogController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ISender _mediator;
 
-        public BlogController(ApplicationDbContext context, ISender mediator)
+        public BlogController(IApplicationDbContext context, ISender mediator)
         {
             _context = context;
             _mediator = mediator;
@@ -39,7 +40,7 @@ namespace CrawlerBlog.Controllers
             return Ok(result);
         }
 
-        [HttpPost("savepost")]
+        [HttpPost("addpost")]
         public async Task<ActionResult<List<Post>>> AddBlogPost()
         {
             var result = await _mediator.Send(new AddPostsCommand());
@@ -48,8 +49,8 @@ namespace CrawlerBlog.Controllers
             return result;
         }
 
-        [HttpPost("savecmts")]
-        public async Task<ActionResult<List<ChangeListDto>>> GetComments()
+        [HttpPost("addcmts")]
+        public async Task<ActionResult<List<ChangeListDto>>> AddComments()
         {
             var result = await _mediator.Send(new AddCommentsCommand());
 

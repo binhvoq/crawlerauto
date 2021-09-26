@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace CrawlerBlog.UseCases
 {
-    class QueryTests
+    public class QueryTests
     {
+        public async Task GetBlogPost_ReturnBlogPost_WhenSuccess() { 
+            //Arrange
+
+        }
     }
 }

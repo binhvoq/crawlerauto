@@ -11,6 +11,9 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\src\\Application", "Application.csproj", "0")]
+[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("CrawlerBlog, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\src\\CrawlerBlog", "CrawlerBlog.csproj", "0")]
+[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "C:\\Users\\QUOC BINH\\Desktop\\MyWeb\\crawlerauto\\CrawlerBlog\\src\\Domain", "Domain.csproj", "0")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("CrawlerBlog")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
