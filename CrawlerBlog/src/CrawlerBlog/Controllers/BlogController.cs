@@ -1,4 +1,5 @@
-﻿using Application.Dto;
+﻿using Application.Contants;
+using Application.Dto;
 using Application.Interfaces;
 using Application.UseCases.Commands;
 using Application.UseCases.Queries;
@@ -45,7 +46,7 @@ namespace CrawlerBlog.Controllers
         {
             var result = await _mediator.Send(new AddPostsCommand());
 
-            if (result.Count == 0) return Ok("No posts are update");
+            if (result.Count == 0) return Ok(CustomErrorMessages.NoPostToUpdate);
             return result;
         }
 
