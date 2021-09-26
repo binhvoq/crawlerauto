@@ -47,7 +47,7 @@ namespace CrawlerBlog.Controllers
             var result = await _mediator.Send(new AddPostsCommand());
 
             if (result.Count == 0) return Ok(CustomErrorMessages.NoPostToUpdate);
-            return result;
+            return Ok(result);
         }
 
         [HttpPost("addcmts")]
