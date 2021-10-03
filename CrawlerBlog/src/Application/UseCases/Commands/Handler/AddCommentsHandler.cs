@@ -1,4 +1,5 @@
-﻿using Application.Dto;
+﻿using Application.Contants;
+using Application.Dto;
 using Application.Interfaces;
 using Domain.Entities;
 using HtmlAgilityPack;
@@ -26,15 +27,10 @@ namespace Application.UseCases.Commands.Handler
         }
         public async Task<List<ChangeListDto>> Handle(AddCommentsCommand request, CancellationToken cancellationToken)
         {
-            var listPostUpdate = _context.Posts.ToList();
-            if (listPostUpdate.Count <= 0)
-            {
-                var errorMessage = "Cannot get blog post list";
-                _logger.LogError(errorMessage);
-                throw new Exception(errorMessage);
-            }
-
             var changeList = new List<ChangeListDto>();
+
+            var listPostUpdate = _context.Posts.ToList();
+            if (listPostUpdate.Count <= 0) return changeList;
 
             foreach (var post in listPostUpdate)
             {
@@ -90,11 +86,11 @@ namespace Application.UseCases.Commands.Handler
             }
             catch (HttpRequestException)
             {
-                throw new Exception("API changed or wrong cmtId");
+                throw new Exception(CustomErrorMessages.CmtAPIChanged);
             }
             catch (Exception)
             {
-                throw new Exception("Error when get comment");
+                throw new Exception(CustomErrorMessages.FailToSave);
             }
         }
 

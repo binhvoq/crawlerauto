@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Contants;
+using Application.Interfaces;
 using CrawlerAuto.Dto;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,18 +21,20 @@ namespace Application.UseCases.Queries.Handlers
             _context = context;
             _logger = logger;
         }
+
         public async Task<IEnumerable<PostDto>> Handle(GetPostsQuery request, CancellationToken cancellationToken)
         {
-            if (request.pageIndex <= 0 || request.pageSize <= 0) {
-                var errorMessage = "pageIndex and pageSize must be positive value";
+            if (request.pageIndex <= 0 || request.pageSize <= 0)
+            {
+                var errorMessage = CustomErrorMessages.InvaildPageInput;
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
-            }       
+            }
             var pageIndex = request.pageIndex;
             int pageSize = request.pageSize;
 
             var skipItems = (pageIndex - 1) * pageSize;
-            var result = await _context.Posts.Include(c => c.comments).Select(x => new PostDto
+            var result = _context.Posts.Include(c => c.comments).Select(x => new PostDto
             {
                 id = x.id,
                 uri = x.uri,
@@ -44,7 +47,7 @@ namespace Application.UseCases.Queries.Handlers
                     content = cmt.content,
                     numberLike = cmt.numberLike
                 }).ToList()
-            }).Skip(skipItems).Take(pageSize).ToListAsync();
+            }).Skip(skipItems).Take(pageSize).ToList();
 
             return result;
         }

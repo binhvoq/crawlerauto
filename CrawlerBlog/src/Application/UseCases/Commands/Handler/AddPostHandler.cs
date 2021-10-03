@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Contants;
+using Application.Interfaces;
 using Domain.Entities;
 using HtmlAgilityPack;
 using MediatR;
@@ -30,7 +31,7 @@ namespace Application.UseCases.Commands.Handler
             var nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
 
             if (nodes == null) {
-                var errorMessage = "Classes changed or can not get html";
+                var errorMessage = CustomErrorMessages.NodeReturnNull;
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             };
@@ -63,7 +64,7 @@ namespace Application.UseCases.Commands.Handler
             }
             catch (DbUpdateException)
             {
-                var errorMessage = "Error when save data";
+                var errorMessage = CustomErrorMessages.FailToSave;
                 _logger.LogError(errorMessage);
                 throw new DbUpdateException(errorMessage);
             }

@@ -56,7 +56,7 @@ namespace CrawlerBlog.Controllers
             var result = await _mediator.Send(new AddCommentsCommand());
 
             if (result.Count == 0) return Ok("No comments are update");
-            return result;
+            return Ok(result);
         }
 
         // PUT: api/BlogPosts/5
