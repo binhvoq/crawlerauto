@@ -1,10 +1,12 @@
 ﻿using Application.Contants;
 using Application.Interfaces;
+using Application.Options;
 using Domain.Entities;
 using HtmlAgilityPack;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +20,17 @@ namespace Application.UseCases.Commands.Handler
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<AddPostHandler> _logger;
+        private readonly WebHostDomainOption _webHostDomainOption;
 
-        public AddPostHandler(IApplicationDbContext context, ILogger<AddPostHandler> logger) {
+        public AddPostHandler(IApplicationDbContext context, ILogger<AddPostHandler> logger, IOptions<WebHostDomainOption> webHostDomainOption) {
             _context = context;
             _logger = logger;
+            _webHostDomainOption = webHostDomainOption.Value;
         }
 
         public async Task<List<Post>> Handle(AddPostsCommand request, CancellationToken cancellationToken)
         {
-            var html = @"https://nld.com.vn/";
+            var html = _webHostDomainOption.NguoiLaoDong;
 
             var nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
 

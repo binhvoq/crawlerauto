@@ -1,7 +1,11 @@
 ﻿using Application.Interfaces;
+using Application.Options;
 using Application.UseCases.Commands;
 using Application.UseCases.Commands.Handler;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -20,10 +24,22 @@ namespace CrawlerBlog.UnitTest.UseCases
         {
             var mockContext = new Mock<IApplicationDbContext>();
             var mockLogger = new Mock<ILogger<AddPostHandler>>();
-            var service = new AddPostHandler(mockContext.Object, mockLogger.Object);
+            var mockOption = new Mock<IOptions<WebHostDomainOption>>();
+
+            var dbSet = new Mock<DbSet<Post>>();
+            dbSet.Setup(x => x.Any(x => x.uri == It.IsAny<string>())).Returns(false);
+
+
+            mockContext.Setup(x => x.Posts).Returns(dbSet.Object);
+
+            mockOption.Setup(x => x.Value).Returns(new WebHostDomainOption { NguoiLaoDong = "https://nld.com.vn/" });
+
+            var service = new AddPostHandler(mockContext.Object, mockLogger.Object, mockOption.Object);
 
             //Act
             var result = service.Handle(new AddPostsCommand(), It.IsAny<CancellationToken>());
+
+            var resul6t = result;
 
         }
 
@@ -51,5 +67,6 @@ namespace CrawlerBlog.UnitTest.UseCases
         //{
 
         //}
+
     }
 }

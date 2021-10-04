@@ -1,4 +1,5 @@
 using Application;
+using Application.Options;
 using Infrastructure;
 using Infrastructure.Data;
 using MediatR;
@@ -35,8 +36,9 @@ namespace CrawlerBlog
             services.AddControllers();
             services.AddApplication();
             services.AddInfrastructure();
+            services.Configure<WebHostDomainOption>(Configuration.GetSection(WebHostDomainOption.WebHostDomain));
             services.AddDbContext<ApplicationDbContext>(
-options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrawlerBlog", Version = "v1" });

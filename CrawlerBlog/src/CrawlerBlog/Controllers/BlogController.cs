@@ -145,10 +145,10 @@ namespace CrawlerBlog.Controllers
 
                 return listComments;
             }
-            catch (HttpRequestException exc) {
+            catch (HttpRequestException) {
                 throw new Exception("API changed or wrong cmtId");
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 throw new Exception("Error when get comment");
             }
