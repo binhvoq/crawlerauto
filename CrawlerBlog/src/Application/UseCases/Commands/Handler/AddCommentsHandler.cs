@@ -42,17 +42,7 @@ namespace Application.UseCases.Commands.Handler
                 _context.Entry(post).State = EntityState.Modified;
             }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                var errorMessage = "Error when save Db";
-                _logger.LogError(errorMessage);
-                throw new DbUpdateException(errorMessage);
-            }
-
+            await _context.SaveChangesAsync();
             return changeList;
         }
 
@@ -87,10 +77,6 @@ namespace Application.UseCases.Commands.Handler
             catch (HttpRequestException)
             {
                 throw new Exception(CustomErrorMessages.CmtAPIChanged);
-            }
-            catch (Exception)
-            {
-                throw new Exception(CustomErrorMessages.FailToSave);
             }
         }
 

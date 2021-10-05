@@ -62,17 +62,7 @@ namespace Application.UseCases.Commands.Handler
             }
             _context.Posts.AddRange(listBlogpost);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                var errorMessage = CustomErrorMessages.FailToSave;
-                _logger.LogError(errorMessage);
-                throw new DbUpdateException(errorMessage);
-            }
-
+            await _context.SaveChangesAsync();
             return listBlogpost;
         }
 

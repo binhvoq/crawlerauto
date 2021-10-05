@@ -11,7 +11,6 @@ namespace Application.Contants
         public const string NoPostToUpdate = "No posts are update";
         public const string InvaildPageInput = "pageIndex and pageSize must be positive value";
         public const string NodeReturnNull = "Classes changed or can not get html";
-        public const string FailToSave = "Error when save data";
         public const string CmtAPIChanged = "API changed or wrong cmtId";
     }
 }

@@ -3,6 +3,7 @@ using Application.Options;
 using Application.UseCases.Commands;
 using Application.UseCases.Commands.Handler;
 using Domain.Entities;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -20,26 +21,29 @@ namespace CrawlerBlog.UnitTest.UseCases
     public class MutationTest
     {
         [Fact]
-        public async Task AddPostHandler_ThrowException_WhenNodeReturnNull()
+        public async Task AddPostHandler_ReturnListPost_WhenSuccess()
         {
-            var mockContext = new Mock<IApplicationDbContext>();
             var mockLogger = new Mock<ILogger<AddPostHandler>>();
             var mockOption = new Mock<IOptions<WebHostDomainOption>>();
-
-            var dbSet = new Mock<DbSet<Post>>();
-            dbSet.Setup(x => x.Any(x => x.uri == It.IsAny<string>())).Returns(false);
-
-
-            mockContext.Setup(x => x.Posts).Returns(dbSet.Object);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
 
             mockOption.Setup(x => x.Value).Returns(new WebHostDomainOption { NguoiLaoDong = "https://nld.com.vn/" });
+            // Insert seed data into the database using one instance of the context
+            using (var context = new ApplicationDbContext(options))
+            {
+                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
+                context.SaveChanges();
+            }
 
-            var service = new AddPostHandler(mockContext.Object, mockLogger.Object, mockOption.Object);
-
-            //Act
-            var result = service.Handle(new AddPostsCommand(), It.IsAny<CancellationToken>());
-
-            var resul6t = result;
+            // Use a clean instance of the context to run the test
+            using (var context = new ApplicationDbContext(options))
+            {
+                AddPostHandler services = new AddPostHandler(context, mockLogger.Object, mockOption.Object);
+                List<Post> result = await services.Handle(new AddPostsCommand(), new CancellationToken());
+                Assert.NotNull(result);
+            }
 
         }
 
