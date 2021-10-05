@@ -20,31 +20,43 @@ namespace CrawlerBlog.UnitTest.UseCases
 {
     public class MutationTest
     {
+        private readonly DbContextOptions<ApplicationDbContext> _options;
+        public MutationTest()
+        {
+            _options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "MutationTestDatabse")
+                    .Options;
+            Seed();
+        }
         [Fact]
         public async Task AddPostHandler_ReturnListPost_WhenSuccess()
         {
+            
             var mockLogger = new Mock<ILogger<AddPostHandler>>();
             var mockOption = new Mock<IOptions<WebHostDomainOption>>();
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
-                .Options;
-
             mockOption.Setup(x => x.Value).Returns(new WebHostDomainOption { NguoiLaoDong = "https://nld.com.vn/" });
-            // Insert seed data into the database using one instance of the context
-            using (var context = new ApplicationDbContext(options))
-            {
-                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
-                context.SaveChanges();
-            }
 
-            // Use a clean instance of the context to run the test
-            using (var context = new ApplicationDbContext(options))
+            using (var context = new ApplicationDbContext(_options))
             {
+                //Act
                 AddPostHandler services = new AddPostHandler(context, mockLogger.Object, mockOption.Object);
                 List<Post> result = await services.Handle(new AddPostsCommand(), new CancellationToken());
+
+                //Assert
                 Assert.NotNull(result);
             }
 
+        }
+
+        private void Seed() {
+            using (var context = new ApplicationDbContext(_options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
+                context.SaveChanges();
+            }
         }
 
         //public async Task AddPostHandler_ThrowException_WhenFailToSavePosts()

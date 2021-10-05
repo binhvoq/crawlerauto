@@ -4,6 +4,7 @@ using Application.UseCases.Queries;
 using Application.UseCases.Queries.Handlers;
 using CrawlerAuto.Dto;
 using Domain.Entities;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,14 +21,15 @@ namespace CrawlerBlog.UnitTest.UseCases
 {
     public class QueryTest
     {
-        private readonly Mock<IApplicationDbContext> _mockContext;
         private readonly Mock<ILogger<GetPostsHandler>> _mockLogger;
-        private readonly GetPostsHandler getPostsHandler;
+        private readonly DbContextOptions<ApplicationDbContext> _options;
         public QueryTest()
         {
-            _mockContext = new Mock<IApplicationDbContext>();
             _mockLogger = new Mock<ILogger<GetPostsHandler>>();
-            getPostsHandler = new GetPostsHandler(_mockContext.Object, _mockLogger.Object);
+            _options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                           .UseInMemoryDatabase(databaseName: "QueryTestDatabse")
+                           .Options;
+            Seed();       
         }
         [Fact]
         public async Task GetPostsQuery_ThrowException_WhenPageIndexNotVaild()
@@ -36,6 +38,8 @@ namespace CrawlerBlog.UnitTest.UseCases
             GetPostsQuery input = new GetPostsQuery { pageIndex = 0, pageSize = 0 };
 
             //Act
+            var mockObject = new Mock<IApplicationDbContext>();
+            var getPostsHandler = new GetPostsHandler(mockObject.Object, _mockLogger.Object);
             Exception exception = await Assert.ThrowsAsync<Exception>(() => getPostsHandler.Handle(input, It.IsAny<CancellationToken>()));
 
             //Assert
@@ -45,54 +49,28 @@ namespace CrawlerBlog.UnitTest.UseCases
         [Fact]
         public async Task GetPostsQuery_ReturnListPosts_WhenSuccess()
         {
-            //Arrange
-            var data = new List<Post>
+            using (var context = new ApplicationDbContext(_options))
             {
-                new Post {
-                comments = new List<Comment>(),
-                id = "001",
-                summary = "sum",
-                title = "title",
-                uri = "url"
-                },
-                new Post {
-                comments = new List<Comment>(),
-                id = "001",
-                summary = "sum",
-                title = "title",
-                uri = "url"
-                },
-                new Post {
-                comments = new List<Comment>(),
-                id = "001",
-                summary = "sum",
-                title = "title",
-                uri = "url"
-                },
-            };
-            var mockContext = new Mock<IApplicationDbContext>();
-            mockContext.Setup(c => c.Posts).Returns(GetQueryableMockDbSet(data));
-            var service = new GetPostsHandler(mockContext.Object, new Mock<ILogger<GetPostsHandler>>().Object);
+                //Act
+                var service = new GetPostsHandler(context, _mockLogger.Object);
+                var result = await service.Handle(new GetPostsQuery { pageIndex = 1, pageSize = 1 }, It.IsAny<CancellationToken>());
+                //Assert
 
-            //Act
-            var result = await service.Handle(new GetPostsQuery {pageIndex = 1, pageSize = 1 },It.IsAny<CancellationToken>());
-
-            //Assert
-            Assert.NotNull(result);
-
+                Assert.NotNull(result);
+            }        
         }
 
-        private static DbSet<T> GetQueryableMockDbSet<T>(List<T> sourceList) where T : class
+        private void Seed()
         {
-            var queryable = sourceList.AsQueryable();
+            using (var context = new ApplicationDbContext(_options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-            var dbSet = new Mock<DbSet<T>>();
-            dbSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
-            dbSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            dbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-            dbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => queryable.GetEnumerator());
-
-            return dbSet.Object;
+                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
+                context.Posts.Add(new Post { cmtId = "2", comments = new List<Comment>(), id = "2", summary = "avef", title = "jrj", totalComments = "10", uri = "uri" });
+                context.SaveChanges();
+            }
         }
 
     }
