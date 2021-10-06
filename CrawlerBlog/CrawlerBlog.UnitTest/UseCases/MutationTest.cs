@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
 using Application.Options;
 using Application.UseCases.Commands;
 using Application.UseCases.Commands.Handler;
@@ -26,12 +27,12 @@ namespace CrawlerBlog.UnitTest.UseCases
             _options = new DbContextOptionsBuilder<ApplicationDbContext>()
                     .UseInMemoryDatabase(databaseName: "MutationTestDatabse")
                     .Options;
-            Seed();
         }
         [Fact]
         public async Task AddPostHandler_ReturnListPost_WhenSuccess()
         {
-            
+            //Arrange
+            Seed();
             var mockLogger = new Mock<ILogger<AddPostHandler>>();
             var mockOption = new Mock<IOptions<WebHostDomainOption>>();
             mockOption.Setup(x => x.Value).Returns(new WebHostDomainOption { NguoiLaoDong = "https://nld.com.vn/" });
@@ -48,41 +49,36 @@ namespace CrawlerBlog.UnitTest.UseCases
 
         }
 
-        private void Seed() {
+        [Fact]
+        public async Task AddCommentsCommand_ReturnChangeList_WhenSuccess()
+        {
+            //Arrange
+            Seed();
+            var mockLogger = new Mock<ILogger<AddCommentsHandler>>();
+
+            using (var context = new ApplicationDbContext(_options))
+            {
+                //Act
+                AddCommentsHandler services = new AddCommentsHandler(context, mockLogger.Object);
+                List<ChangeListDto> result = await services.Handle(new AddCommentsCommand(), new CancellationToken());
+
+                //Assert
+                Assert.NotNull(result);
+            }
+        }
+
+        //public async Task AddCommentsCommand_ThrowException_WhenWebChangedTheirAPI()
+
+        private void Seed()
+        {
             using (var context = new ApplicationDbContext(_options))
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
+                context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "20210923143843924", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
                 context.SaveChanges();
             }
         }
-
-        //public async Task AddPostHandler_ThrowException_WhenFailToSavePosts()
-        //{
-
-        //}
-
-        //public async Task AddPostHandler_ReturnListPosts_WhenSuccess()
-        //{
-
-        //}
-
-        //public async Task AddCommentsCommand_ThrowException_WhenFailToSave()
-        //{
-
-        //}
-
-        //public async Task AddCommentsCommand_ThrowException_WhenWebChangedTheirAPI()
-        //{
-
-        //}
-
-        //public async Task AddCommentsCommand_ReturnChangeList_WhenSuccess()
-        //{
-
-        //}
-
     }
 }
