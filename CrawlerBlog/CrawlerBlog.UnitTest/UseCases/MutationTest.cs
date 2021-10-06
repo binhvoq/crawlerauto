@@ -1,4 +1,5 @@
-﻿using Application.Dto;
+﻿using Application.Contants;
+using Application.Dto;
 using Application.Interfaces;
 using Application.Options;
 using Application.UseCases.Commands;
@@ -46,7 +47,26 @@ namespace CrawlerBlog.UnitTest.UseCases
                 //Assert
                 Assert.NotNull(result);
             }
+        }
 
+        [Fact]
+        public async Task AddPostHandler_ThrowException_WhenWrongDomain()
+        {
+            //Arrange
+            Seed();
+            var mockLogger = new Mock<ILogger<AddPostHandler>>();
+            var mockOption = new Mock<IOptions<WebHostDomainOption>>();
+            mockOption.Setup(x => x.Value).Returns(new WebHostDomainOption { NguoiLaoDong = "https://nd.com.vn/" });
+
+            using (var context = new ApplicationDbContext(_options))
+            {
+                //Act
+                AddPostHandler services = new AddPostHandler(context, mockLogger.Object, mockOption.Object);
+
+                //Assert
+                var exception = await Assert.ThrowsAsync<Exception>(() => services.Handle(new AddPostsCommand(), new CancellationToken()));
+                Assert.Equal(CustomErrorMessages.WrongDomain, exception.Message);
+            }
         }
 
         [Fact]

@@ -31,11 +31,19 @@ namespace Application.UseCases.Commands.Handler
         public async Task<List<Post>> Handle(AddPostsCommand request, CancellationToken cancellationToken)
         {
             var html = _webHostDomainOption.NguoiLaoDong;
+            HtmlNodeCollection nodes;
 
-            var nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
+            try
+            {
+                nodes = LoadHtmlDoc(html).DocumentNode.SelectNodes("//div[@class='box-news-container']//div[@class='news-item ']");
+            }
+            catch (Exception)
+            {
+                throw new Exception(CustomErrorMessages.WrongDomain);
+            }
 
             if (nodes == null) {
-                var errorMessage = CustomErrorMessages.NodeReturnNull;
+                var errorMessage = CustomErrorMessages.ClassChanged;
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             };
