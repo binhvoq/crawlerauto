@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{06F94449-A24
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C8CFCA72-B3EC-42C5-B224-3C14366D4BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerBlog.UnitTest", "CrawlerBlog.UnitTest\CrawlerBlog.UnitTest.csproj", "{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrawlerBlog.UnitTest", "CrawlerBlog.UnitTest\CrawlerBlog.UnitTest.csproj", "{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerBlog.IntergrationTest", "CrawlerBlog.IntergrationTest\CrawlerBlog.IntergrationTest.csproj", "{329C0C5F-D730-4497-A05E-CE7B19D83C86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{329C0C5F-D730-4497-A05E-CE7B19D83C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{329C0C5F-D730-4497-A05E-CE7B19D83C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{329C0C5F-D730-4497-A05E-CE7B19D83C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{329C0C5F-D730-4497-A05E-CE7B19D83C86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{4ECADAC3-6FAC-477F-9B23-39B917B6ED19} = {06F94449-A249-4F42-89F2-4268E917A5A5}
 		{7694A54B-99B8-4DA5-9EB7-EE2486AADDA2} = {06F94449-A249-4F42-89F2-4268E917A5A5}
 		{8E10B765-A12B-4A9E-98E7-0CCF2A1C9A28} = {C8CFCA72-B3EC-42C5-B224-3C14366D4BE3}
+		{329C0C5F-D730-4497-A05E-CE7B19D83C86} = {C8CFCA72-B3EC-42C5-B224-3C14366D4BE3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {073AB132-6C7B-4EF2-A2AE-2782DDD6AC25}
