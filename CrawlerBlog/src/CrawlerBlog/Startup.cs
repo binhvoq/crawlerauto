@@ -3,6 +3,7 @@ using Application.Options;
 using Infrastructure;
 using Infrastructure.Data;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,18 @@ namespace CrawlerBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adds Microsoft Identity platform (AAD v2.0) support to protect this Api
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(options =>
+                    {
+                        Configuration.Bind("AzureAdB2C", options);
+
+                        options.TokenValidationParameters.NameClaimType = "name";
+                    },
+            options => { Configuration.Bind("AzureAdB2C", options); });
+
+            // Creating policies that wraps the authorization requirements
+            services.AddAuthorization();
 
             services.AddControllers();
             services.AddApplication();

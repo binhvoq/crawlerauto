@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace CrawlerBlog.Controllers
     [ApiController]
     public class BlogController : ControllerBase
     {
+        static readonly string[] scopeRequiredByApi = new string[] { "crawler.blog" };
+
         private readonly IApplicationDbContext _context;
         private readonly ISender _mediator;
 
@@ -37,6 +40,7 @@ namespace CrawlerBlog.Controllers
         [HttpPost("getpost")]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetBlogPost(GetPostsQuery getPostsQuery)
         {
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(getPostsQuery);
             return Ok(result);
         }
@@ -44,6 +48,7 @@ namespace CrawlerBlog.Controllers
         [HttpPost("addpost")]
         public async Task<ActionResult<List<Post>>> AddBlogPost()
         {
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(new AddPostsCommand());
 
             if (result.Count == 0) return Ok(CustomErrorMessages.NoPostToUpdate);
@@ -53,6 +58,7 @@ namespace CrawlerBlog.Controllers
         [HttpPost("addcmts")]
         public async Task<ActionResult<List<ChangeListDto>>> AddComments()
         {
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(new AddCommentsCommand());
 
             if (result.Count == 0) return Ok("No comments are update");
@@ -65,6 +71,7 @@ namespace CrawlerBlog.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBlogPost(string id, Post blogPost)
         {
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             if (id != blogPost.id)
             {
                 return BadRequest();
@@ -94,6 +101,7 @@ namespace CrawlerBlog.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Post>> DeleteBlogPost(string id)
         {
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var blogPost = await _context.Posts.FindAsync(id);
             if (blogPost == null)
             {
