@@ -13,7 +13,7 @@ import { b2cPolicies } from './auth-config';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Microsoft identity platform';
+  title = 'Crawler Blog';
   isIframe = false;
   loginDisplay = false;
   private readonly _destroying$ = new Subject<void>();
