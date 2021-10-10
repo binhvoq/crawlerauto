@@ -57,6 +57,14 @@ namespace CrawlerBlog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrawlerBlog", Version = "v1" });
             });
+            // Allowing CORS for all domains and methods for the purpose of the sample
+            // In production, modify this with the actual domains you want to allow
+            services.AddCors(o => o.AddPolicy("default", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,9 +77,13 @@ namespace CrawlerBlog
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CrawlerBlog v1"));
             }
 
+            app.UseCors("default");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

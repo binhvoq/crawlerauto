@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Todo } from './todo';
+import { Todo } from './model/todo';
+import { GetPostsQuery } from './model/query/GetPostsQuery';
 
 import { protectedResources } from './auth-config';
 
@@ -12,8 +13,8 @@ export class TodoService {
 
   constructor(private http: HttpClient) { }
 
-  getTodos() { 
-    return this.http.get<Todo[]>(this.url);
+  getTodos(getPostsQuery: GetPostsQuery) { 
+    return this.http.post<GetPostsQuery>(this.url + '/getpost', getPostsQuery);
   }
 
   getTodo(id: number) { 

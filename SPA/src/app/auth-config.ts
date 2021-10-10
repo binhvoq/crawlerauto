@@ -38,7 +38,7 @@
   */
   export const msalConfig: Configuration = {
      auth: {
-         clientId: '81227357-61dd-4b60-a262-65c7406a9bc7', // This is the ONLY mandatory field that you need to supply.
+         clientId: 'b6eaf116-4247-4cd3-b7e5-aaf2897d641f', // This is the ONLY mandatory field that you need to supply.
          authority: b2cPolicies.authorities.signUpSignIn.authority, // Defaults to "https://login.microsoftonline.com/common"
          knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
          redirectUri: '/', // Points to window.location.origin. You must register this URI on Azure portal/App Registration.
@@ -64,8 +64,8 @@
  */
 export const protectedResources = {
   todoListApi: {
-    endpoint: "https://localhost:44351/api/todolist",
-    scopes: ["https://binhvocomp.onmicrosoft.com/f1cba1a7-3394-481b-9abf-66ce57792cd8/access_as_user"],
+    endpoint: "https://localhost:44356/api/Blog",
+    scopes: ["https://binhvocomp.onmicrosoft.com/4603cb86-6a75-49c1-ab7e-e6c9ed2a6fb4/crawler.blog"],
   },
 }
 
