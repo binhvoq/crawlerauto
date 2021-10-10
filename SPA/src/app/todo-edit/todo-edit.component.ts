@@ -1,4 +1,4 @@
-import { TodoService } from './../todo.service';
+import { BlogService } from '../blog.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class TodoEditComponent implements OnInit {
     status: false,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: TodoService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private service: BlogService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { TodoService } from './../todo.service';
+import { BlogService } from '../blog.service';
 import { Todo } from '../model/todo';
 
 @Component({
@@ -16,13 +16,14 @@ export class TodoViewComponent implements OnInit {
 
   displayedColumns = ['status', 'description', 'edit', 'remove'];
 
-  constructor(private service: TodoService) {}
+  constructor(private service: BlogService) {}
 
   ngOnInit(): void {
     this.getTodos();
   }
 
   getTodos(): void {
+    alert('call');
     this.service.getTodos({ pageIndex: 1, pageSize: 1 }).subscribe((data) => {
       console.log(data);
     });

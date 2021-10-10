@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TodoEditComponent } from './todo-edit/todo-edit.component';
 import { TodoViewComponent } from './todo-view/todo-view.component';
-import { TodoService } from './todo.service';
+import { BlogService } from './blog.service';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
@@ -108,7 +108,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalService,
     MsalGuard,
     MsalBroadcastService,
-    TodoService
+    BlogService
   ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })

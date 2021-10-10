@@ -1,9 +1,80 @@
-table {
-    width: 70%;
-    margin: 3% auto auto auto;
-  }
-  
-.card-section {
-    margin: 10%;
-    padding: 5%;
-  }
+.post {
+  padding: 30px;
+  margin: 15px 20px;
+  background-color: #ffffff;
+}
+
+.post .total-comments {
+  font-weight: bold;
+  color: #9f224e;
+}
+
+.post .summary {
+  padding: 10px 0px;
+  font-weight: 500;
+  font-size: large;
+}
+
+.comment {
+  position: relative;
+  padding: 10px;
+  background-color: #f0f2f5;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  width: fit-content;
+}
+
+.comment .author {
+  font-weight: bold;
+  color: #9f224e;
+}
+
+.comment .likes {
+  background-color: #ffffff;
+  position: absolute;
+  padding-right: 12px;
+  padding-left: 6px;
+  border: 1px solid #f0f2f5;
+  width: fit-content;
+  right: 5px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #f0f2f5;
+}
+
+.likes .number {
+  /* color: #4792f5; */
+  color: blue;
+  user-select: none;
+}
+
+.likes .icon {
+  top: 2px;
+  position: relative;
+  width: 1.2rem;
+  height: 1.2rem;
+  right: -4px;
+  color: #a4a4a4;
+}
+
+.paging-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+}
+
+.paging-button > button {
+  margin: 5px;
+  border: blue gray 2px;
+  padding: 5px 10px;
+}
+
+.paging-button > input {
+  margin-right: 5px;
+  height: 25px;
+  width: 50px;
+}
+
+.paging-button > div {
+  margin-right: 5px;
+}
