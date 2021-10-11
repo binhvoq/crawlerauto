@@ -8,7 +8,7 @@ import { BlogService } from '../blog.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  post: Post[] = [];
+  posts: Post[] = [];
 
   constructor(private service: BlogService) {}
 
@@ -17,9 +17,9 @@ export class HomeComponent implements OnInit {
   }
 
   getPost(): void {
-    this.service.getTodos({ pageIndex: 1, pageSize: 1 }).subscribe((data) => {
+    this.service.getTodos({ pageIndex: 1, pageSize: 2 }).subscribe((data) => {
       console.log(data);
-      this.post = data;
+      this.posts = data;
     });
   }
 

@@ -1,25 +1,19 @@
-<div class="post">
-  <h2>Title</h2>
+<div *ngFor="let post of posts" class="post">
+  <h2>{{ post.title }}</h2>
   <div>
     <span>Post by BaoThanhNien có </span>
-    <span class="total-comments"> Post </span>
+    <span class="total-comments"> {{ post.totalComments }} </span>
     lượt <span class="total-comments">bình luận</span>
   </div>
-  <div class="summary">Summary</div>
+  <div class="summary">{{ post.summary }}</div>
   <hr />
 
-  <div class="comment">
-    <div class="author">Author</div>
-    <div class="comment-content">Content</div>
+  <div *ngFor="let comment of post.comments" class="comment">
+    <div class="author">{{ comment.author }}</div>
+    <div class="comment-content">{{ comment.content }}</div>
     <div class="likes">
-      <span class="number">numberLike</span>
+      <span class="number">{{ comment.numberLike }}</span>
       <span class="material-icons"> thumb_up </span>
-
-      <!-- <Icon
-              class="icon"
-              path={mdiThumbUp}
-              size={0.8}
-            ></Icon> -->
     </div>
   </div>
 </div>
