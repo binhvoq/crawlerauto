@@ -29,7 +29,7 @@ namespace Application.UseCases.Commands.Handler
         {
             var changeList = new List<ChangeListDto>();
 
-            var listPostUpdate = _context.Posts.ToList();
+            var listPostUpdate = _context.Posts.Include(x=>x.comments).ToList();
             if (listPostUpdate.Count <= 0) return changeList;
 
             foreach (var post in listPostUpdate)
@@ -37,8 +37,12 @@ namespace Application.UseCases.Commands.Handler
                 var listComments = await getNguoiLaoDongCommentAsync(post.cmtId);
                 UpdateChangeList(changeList, post, listComments.Count.ToString()); //do not change order
 
+                var newComments = listComments.FindAll(x => !post.comments.Select(y => y.content).Contains(x.content));  //filter new comments
+
+                if (newComments.Count == 0) continue;                      
+                post.comments = newComments;
                 post.totalComments = listComments.Count.ToString();
-                post.comments = (listComments.Count > 0) ? listComments : null;
+
                 _context.Entry(post).State = EntityState.Modified;
             }
 
@@ -82,7 +86,7 @@ namespace Application.UseCases.Commands.Handler
 
         private void UpdateChangeList(List<ChangeListDto> changeList, Post post, string newTotalComments)
         {
-            if (newTotalComments != post.totalComments && newTotalComments != "0") changeList.Add(new ChangeListDto
+            if (newTotalComments != post.comments.Count.ToString() && newTotalComments != "0") changeList.Add(new ChangeListDto
             {
                 id = post.id,
                 title = post.title,
