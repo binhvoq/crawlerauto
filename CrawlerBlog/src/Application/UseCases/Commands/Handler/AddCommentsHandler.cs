@@ -29,7 +29,7 @@ namespace Application.UseCases.Commands.Handler
         {
             var changeList = new List<ChangeListDto>();
 
-            var listPostUpdate = _context.Posts.Include(x=>x.comments).ToList();
+            var listPostUpdate = _context.Posts.Include(x => x.comments).ToList();
             if (listPostUpdate.Count <= 0) return changeList;
 
             foreach (var post in listPostUpdate)
@@ -37,10 +37,18 @@ namespace Application.UseCases.Commands.Handler
                 var listComments = await getNguoiLaoDongCommentAsync(post.cmtId);
                 UpdateChangeList(changeList, post, listComments.Count.ToString()); //do not change order
 
-                var newComments = listComments.FindAll(x => !post.comments.Select(y => y.content).Contains(x.content));  //filter new comments
+                var newComments = listComments.FindAll(x => !post.comments.Select(y => y.content).Contains(x.content)
+                && !post.comments.Select(y => y.author).Contains(x.author));  //filter new comments
 
-                if (newComments.Count == 0) continue;                      
-                post.comments = newComments;
+                //Update numberLike
+                post.comments = post.comments.Select(x => {
+                    x.numberLike = listComments.Any(y => y.author == x.author && y.content == x.content) ? listComments.Find(y => y.author == x.author && y.content == x.content).numberLike : x.numberLike;
+                    return x;
+                }).ToList();
+
+                //Add new comments
+                if (newComments.Count == 0) continue;
+                post.comments.AddRange(newComments.Select(x => { x.post = post; return x; }));
                 post.totalComments = listComments.Count.ToString();
 
                 _context.Entry(post).State = EntityState.Modified;
@@ -91,7 +99,7 @@ namespace Application.UseCases.Commands.Handler
                 id = post.id,
                 title = post.title,
                 uri = post.uri,
-                commentsUpdated = (post.totalComments ?? "0") + " -> " + newTotalComments
+                commentsUpdated = (post.comments.Count.ToString() ?? "0") + " -> " + newTotalComments
             });
         }
     }
