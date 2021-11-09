@@ -17,7 +17,6 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { TodoEditComponent } from './todo-edit/todo-edit.component';
 import { TodoViewComponent } from './todo-view/todo-view.component';
 import { BlogService } from './blog.service';
 
@@ -68,7 +67,6 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     AppComponent,
     HomeComponent,
     TodoViewComponent,
-    TodoEditComponent
   ],
   imports: [
     BrowserModule,

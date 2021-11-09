@@ -71,15 +71,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  editProfile() {
-    let editProfileFlowRequest = {
-      scopes: ["openid"],
-      authority: b2cPolicies.authorities.editProfile.authority,
-    };
-
-    this.login(editProfileFlowRequest);
-  }
-
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();

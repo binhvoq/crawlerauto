@@ -13,12 +13,13 @@ export class HomeComponent implements OnInit {
   constructor(private service: BlogService) {}
 
   ngOnInit(): void {
-    this.getPost();
+    setTimeout(() => {
+      this.getPost();
+    }, 1000);
   }
 
   getPost(): void {
-    this.service.getTodos({ pageIndex: 1, pageSize: 2 }).subscribe((data) => {
-      console.log(data);
+    this.service.getTodos({ pageIndex: 1, pageSize: 10 }).subscribe((data) => {
       this.posts = data;
     });
   }
