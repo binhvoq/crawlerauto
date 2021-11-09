@@ -52,9 +52,10 @@ namespace Application.UseCases.Queries.Handlers
                 }).ToList()
             }).Skip(skipItems).Take(pageSize).ToList();
 
+
             return new GetPostsResponnseDto { 
                 posts = result,
-                totalPages = _context.Posts.Count()
+                totalPages = (_context.Posts.Count() + pageSize - 1) / pageSize
             };
         }
     }

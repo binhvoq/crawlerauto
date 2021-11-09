@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetPostsDto, Post } from '../model/dto/Post';
 import { BlogService } from '../blog.service';
+import appSetting from '../appsetting';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ export class HomeComponent implements OnInit {
     totalPages: 0,
   };
 
+  currentPage: number = 1;
+
   constructor(private service: BlogService) {}
 
   ngOnInit(): void {
@@ -21,13 +24,35 @@ export class HomeComponent implements OnInit {
     }, 2000);
   }
 
-  getPosts(): void {
-    this.service.getPosts({ pageIndex: 1, pageSize: 10 }).subscribe((data) => {
-      this.postsData = data;
-    });
+  nextPage(): void {
+    if (this.currentPage < this.postsData.totalPages) {
+      this.currentPage++;
+      this.getPosts();
+    }
   }
 
-  // ngOnDestroy(): void {
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getPosts();
+    }
+  }
 
-  // }
+  changePage(pageInput: string): void {
+    const pageNumber = parseInt(pageInput);
+    if (pageNumber > 0 && pageNumber <= this.postsData.totalPages)
+      this.currentPage = pageNumber;
+    this.getPosts();
+  }
+
+  getPosts(): void {
+    this.service
+      .getPosts({
+        pageIndex: this.currentPage,
+        pageSize: appSetting.pageSize,
+      })
+      .subscribe((data) => {
+        this.postsData = data;
+      });
+  }
 }

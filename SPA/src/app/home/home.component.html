@@ -1,8 +1,34 @@
+<div class="d-flex justify-content-center pt-4">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <span class="page-link can-click" (click)="previousPage()"
+          >Previous</span
+        >
+      </li>
+      <li class="page-item">
+        <input
+          type="number"
+          class="form-control input-page-index"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [value]="currentPage"
+          (change)="changePage($event.target.value)"
+        />
+      </li>
+      <li class="page-item can-click">
+        <span class="page-link" (click)="nextPage()">Next</span>
+      </li>
+    </ul>
+  </nav>
+  <span class="total-page">of {{ postsData.totalPages }}</span>
+</div>
+
 <div *ngFor="let post of postsData.posts" class="post">
-  <h2>{{ post.title }}</h2>
+  <h1>{{ post.title }}</h1>
   <div>
     <span>Post by BaoThanhNien có </span>
-    <span class="total-comments"> {{ post.totalComments }} </span>
+    <span class="total-comments"> {{ post.totalComments || "0" }} </span>
     lượt <span class="total-comments">bình luận</span>
   </div>
   <div class="summary">{{ post.summary }}</div>
@@ -18,19 +44,27 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center pt-4 pb-4">
   <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item">
+        <span class="page-link can-click" (click)="previousPage()"
+          >Previous</span
+        >
+      </li>
       <li class="page-item">
         <input
-          type="text"
+          type="number"
           class="form-control input-page-index"
           aria-label="Username"
           aria-describedby="basic-addon1"
+          [value]="currentPage"
+          (change)="changePage()"
         />
       </li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <li class="page-item can-click">
+        <span class="page-link" (click)="nextPage()">Next</span>
+      </li>
     </ul>
   </nav>
   <span class="total-page">of {{ postsData.totalPages }}</span>
