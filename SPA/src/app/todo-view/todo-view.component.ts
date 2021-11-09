@@ -23,10 +23,10 @@ export class TodoViewComponent implements OnInit {
   }
 
   getTodos(): void {
-    alert('call');
-    this.service.getTodos({ pageIndex: 1, pageSize: 1 }).subscribe((data) => {
-      console.log(data);
-    });
+    // alert('call');
+    // this.service.getTodos({ pageIndex: 1, pageSize: 1 }).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
   addTodo(add: NgForm): void {

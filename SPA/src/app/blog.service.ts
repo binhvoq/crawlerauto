@@ -4,7 +4,7 @@ import { Todo } from './model/todo';
 import { GetPostsQuery } from './model/query/GetPostsQuery';
 
 import { protectedResources } from './auth-config';
-import { Post } from './model/dto/Post';
+import { GetPostsDto, Post } from './model/dto/Post';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,8 @@ export class BlogService {
 
   constructor(private http: HttpClient) {}
 
-  getTodos(getPostsQuery: GetPostsQuery) {
-    return this.http.post<Post[]>(this.url + '/getpost', getPostsQuery);
+  getPosts(getPostsQuery: GetPostsQuery) {
+    return this.http.post<GetPostsDto>(this.url + '/getpost', getPostsQuery);
   }
 
   getTodo(id: number) {

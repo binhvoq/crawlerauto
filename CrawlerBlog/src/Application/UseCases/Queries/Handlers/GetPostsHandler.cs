@@ -1,4 +1,5 @@
 ﻿using Application.Contants;
+using Application.Dto;
 using Application.Interfaces;
 using CrawlerAuto.Dto;
 using MediatR;
@@ -13,16 +14,18 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Queries.Handlers
 {
-    public class GetPostsHandler : IRequestHandler<GetPostsQuery, IEnumerable<PostDto>>
+    public class GetPostsHandler : IRequestHandler<GetPostsQuery, GetPostsResponnseDto>
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<GetPostsHandler> _logger;
-        public GetPostsHandler(IApplicationDbContext context, ILogger<GetPostsHandler> logger) {
+        public GetPostsHandler(IApplicationDbContext context, ILogger<GetPostsHandler> logger)
+        {
             _context = context;
             _logger = logger;
         }
 
-        public async Task<IEnumerable<PostDto>> Handle(GetPostsQuery request, CancellationToken cancellationToken)
+
+        public async Task<GetPostsResponnseDto> Handle(GetPostsQuery request, CancellationToken cancellationToken)
         {
             if (request.pageIndex <= 0 || request.pageSize <= 0)
             {
@@ -49,7 +52,10 @@ namespace Application.UseCases.Queries.Handlers
                 }).ToList()
             }).Skip(skipItems).Take(pageSize).ToList();
 
-            return result;
+            return new GetPostsResponnseDto { 
+                posts = result,
+                totalPages = _context.Posts.Count()
+            };
         }
     }
 }

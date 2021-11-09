@@ -1,10 +1,15 @@
-import {Comment} from "./Comment"
+import { Comment } from './Comment';
 
 export interface Post {
-    id: string;
-    uri: string;
-    title: string;
-    summary: string;
-    totalComments: string;
-    comments: Array<Comment>;
+  id: string;
+  uri: string;
+  title: string;
+  summary: string;
+  totalComments: string;
+  comments: Array<Comment>;
+}
+
+export interface GetPostsDto {
+  posts: Post[];
+  totalPages: number;
 }

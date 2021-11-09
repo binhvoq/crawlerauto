@@ -1,4 +1,4 @@
-<div *ngFor="let post of posts" class="post">
+<div *ngFor="let post of postsData.posts" class="post">
   <h2>{{ post.title }}</h2>
   <div>
     <span>Post by BaoThanhNien có </span>
@@ -33,5 +33,5 @@
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
-  <span class="total-page">of 20</span>
+  <span class="total-page">of {{ postsData.totalPages }}</span>
 </div>

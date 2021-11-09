@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../model/dto/Post';
+import { GetPostsDto, Post } from '../model/dto/Post';
 import { BlogService } from '../blog.service';
 
 @Component({
@@ -8,19 +8,22 @@ import { BlogService } from '../blog.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  posts: Post[] = [];
+  postsData: GetPostsDto = {
+    posts: [] as Post[],
+    totalPages: 0,
+  };
 
   constructor(private service: BlogService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.getPost();
+      this.getPosts();
     }, 2000);
   }
 
-  getPost(): void {
-    this.service.getTodos({ pageIndex: 1, pageSize: 10 }).subscribe((data) => {
-      this.posts = data;
+  getPosts(): void {
+    this.service.getPosts({ pageIndex: 1, pageSize: 10 }).subscribe((data) => {
+      this.postsData = data;
     });
   }
 

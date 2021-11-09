@@ -38,7 +38,7 @@ namespace CrawlerBlog.Controllers
         }
 
         [HttpPost("getpost")]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetBlogPost(GetPostsQuery getPostsQuery)
+        public async Task<ActionResult<GetPostsResponnseDto>> GetBlogPost(GetPostsQuery getPostsQuery)
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(getPostsQuery);
