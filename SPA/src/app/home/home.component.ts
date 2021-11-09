@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.getPost();
-    }, 1000);
+    }, 2000);
   }
 
   getPost(): void {

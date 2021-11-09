@@ -81,3 +81,14 @@
 .paging-button > div {
   margin-right: 5px;
 }
+
+.input-page-index {
+  height: 35px;
+  max-width: 50px;
+}
+
+.total-page {
+  position: relative;
+  top: 7px;
+  padding-left: 12px;
+}
