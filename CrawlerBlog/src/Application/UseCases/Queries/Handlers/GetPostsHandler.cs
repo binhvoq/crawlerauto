@@ -49,7 +49,7 @@ namespace Application.UseCases.Queries.Handlers
                     author = cmt.author,
                     content = cmt.content,
                     numberLike = cmt.numberLike
-                }).ToList()
+                }).OrderByDescending(o => o.numberLike).ToList()
             }).Skip(skipItems).Take(pageSize).ToList();
 
 
