@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 import { BlogService } from '../blog.service';
-import { Todo } from '../model/todo';
 
 @Component({
   selector: 'app-todo-view',
@@ -10,39 +8,17 @@ import { Todo } from '../model/todo';
   styleUrls: ['./todo-view.component.css'],
 })
 export class TodoViewComponent implements OnInit {
-  todo?: Todo;
-
-  todos: Todo[] = [];
-
-  displayedColumns = ['status', 'description', 'edit', 'remove'];
+  loadingGetPosts: boolean = false;
+  loadingUpdateComments: boolean = false;
 
   constructor(private service: BlogService) {}
 
-  ngOnInit(): void {
-    this.getTodos();
+  ngOnInit(): void {}
+  getPosts(): void {
+    this.loadingGetPosts = true;
   }
 
-  getTodos(): void {
-    // alert('call');
-    // this.service.getTodos({ pageIndex: 1, pageSize: 1 }).subscribe((data) => {
-    //   console.log(data);
-    // });
-  }
-
-  addTodo(add: NgForm): void {
-    this.service.postTodo(add.value).subscribe(() => {
-      this.getTodos();
-    });
-    add.resetForm();
-  }
-
-  checkTodo(todo: Todo): void {
-    this.service.editTodo(todo).subscribe();
-  }
-
-  removeTodo(id: string): void {
-    this.service.deleteTodo(+id).subscribe(() => {
-      this.getTodos();
-    });
+  getComments(): void {
+    this.loadingUpdateComments = true;
   }
 }

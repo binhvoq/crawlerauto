@@ -1,6 +1,31 @@
 <mat-card class="card-section">
-  <h2></h2>
+  <h2>Get Posts</h2>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="loadingGetPosts"
+    [class.loading]="loadingGetPosts"
+    (click)="getPosts()"
+  >
+    Call API
+  </button>
 </mat-card>
 <br />
 
-<mat-card class="card-section"> </mat-card>
+<!-- <div *ngIf="postsData.posts.length == 0; else home_content">
+  <div class="d-flex justify-content-center loading">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+</div> -->
+
+<mat-card class="card-section">
+  <h2>Update comments</h2>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [class.loading]="loadingUpdateComments"
+    (click)="getComments()"
+  >
+    Call API
+  </button>
+</mat-card>
