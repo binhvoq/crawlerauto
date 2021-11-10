@@ -4,7 +4,7 @@ import { Todo } from './model/todo';
 import { GetPostsQuery } from './model/query/GetPostsQuery';
 
 import { protectedResources } from './auth-config';
-import { GetPostsDto, Post } from './model/dto/Post';
+import { ChangeListDto, GetPostsDto, Post } from './model/dto/Post';
 
 @Injectable({
   providedIn: 'root',
@@ -18,19 +18,11 @@ export class BlogService {
     return this.http.post<GetPostsDto>(this.url + '/getpost', getPostsQuery);
   }
 
-  getTodo(id: number) {
-    return this.http.get<Todo>(this.url + '/' + id);
+  addPosts() {
+    return this.http.post<Post[]>(this.url + '/addpost', {});
   }
 
-  postTodo(todo: Todo) {
-    return this.http.post<Todo>(this.url, todo);
-  }
-
-  deleteTodo(id: number) {
-    return this.http.delete(this.url + '/' + id);
-  }
-
-  editTodo(todo: Todo) {
-    return this.http.put<Todo>(this.url + '/' + todo.id, todo);
+  addComments() {
+    return this.http.post<ChangeListDto[]>(this.url + '/addcmts', {});
   }
 }

@@ -1,31 +1,63 @@
 <mat-card class="card-section">
-  <h2>Get Posts</h2>
-  <button
-    type="button"
-    class="btn btn-primary"
-    [disabled]="loadingGetPosts"
-    [class.loading]="loadingGetPosts"
-    (click)="getPosts()"
-  >
-    Call API
-  </button>
+  <h2>Get posts</h2>
+  <div class="d-flex align-items-center">
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="loadingGetPosts"
+      (click)="getPosts()"
+    >
+      <span
+        *ngIf="loadingGetPosts"
+        class="spinner-border spinner-border-sm"
+      ></span>
+      Call API
+    </button>
+    <p *ngIf="returnDataGetPosts.length > 0" class="status-text">
+      <span class="text-success">{{ returnDataGetPosts.length }} </span>
+      <span></span>
+      posts added
+    </p>
+  </div>
 </mat-card>
 <br />
 
-<!-- <div *ngIf="postsData.posts.length == 0; else home_content">
-  <div class="d-flex justify-content-center loading">
-    <div class="spinner-border text-primary" role="status"></div>
-  </div>
-</div> -->
-
 <mat-card class="card-section">
   <h2>Update comments</h2>
-  <button
-    type="button"
-    class="btn btn-primary"
-    [class.loading]="loadingUpdateComments"
-    (click)="getComments()"
-  >
-    Call API
-  </button>
+  <div class="d-flex align-items-center">
+    <button
+      type="button"
+      [disabled]="loadingUpdateComments"
+      class="btn btn-primary"
+      (click)="getComments()"
+    >
+      <span
+        *ngIf="loadingUpdateComments"
+        class="spinner-border spinner-border-sm"
+      ></span>
+      Call API
+    </button>
+    <p
+      *ngIf="returnDataGetComments.length > 0"
+      class="text-success status-text"
+    >
+      API run successfully
+    </p>
+  </div>
+  <table *ngIf="returnDataGetComments.length > 0" class="table change-list">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Title</th>
+        <th scope="col">Comments Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let upComment of returnDataGetComments; index as i">
+        <th scope="row">{{ i }}</th>
+        <td>{{ upComment.title }}</td>
+        <td>{{ upComment.commentsUpdated }}</td>
+      </tr>
+    </tbody>
+  </table>
 </mat-card>

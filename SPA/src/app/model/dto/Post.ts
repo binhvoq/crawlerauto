@@ -13,3 +13,10 @@ export interface GetPostsDto {
   posts: Post[];
   totalPages: number;
 }
+
+export interface ChangeListDto {
+  id: string;
+  title: string;
+  uri: string;
+  commentsUpdated: string;
+}

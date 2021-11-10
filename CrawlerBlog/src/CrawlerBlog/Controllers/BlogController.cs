@@ -51,7 +51,7 @@ namespace CrawlerBlog.Controllers
             HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(new AddPostsCommand());
 
-            if (result.Count == 0) return Ok(CustomErrorMessages.NoPostToUpdate);
+            if (result.Count == 0) return Ok(new List<Post>());
             return Ok(result);
         }
 
@@ -61,7 +61,7 @@ namespace CrawlerBlog.Controllers
             HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             var result = await _mediator.Send(new AddCommentsCommand());
 
-            if (result.Count == 0) return Ok("No comments are update");
+            if (result.Count == 0) return Ok(new List<ChangeListDto>());
             return Ok(result);
         }
 

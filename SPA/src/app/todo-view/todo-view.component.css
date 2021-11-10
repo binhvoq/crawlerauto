@@ -25,6 +25,13 @@ table {
   cursor: pointer;
 }
 
-.loading {
-  display: none;
+.status-text {
+  padding-left: 13px;
+  position: relative;
+  top: 4px;
+  font-size: 17px;
+}
+
+.change-list {
+  margin-top: 20px;
 }
