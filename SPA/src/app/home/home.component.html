@@ -1,71 +1,79 @@
-<div class="d-flex justify-content-center pt-4">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item">
-        <span class="page-link can-click" (click)="previousPage()"
-          >Previous</span
-        >
-      </li>
-      <li class="page-item">
-        <input
-          type="number"
-          class="form-control input-page-index"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          [value]="currentPage"
-          (change)="changePage($event.target.value)"
-        />
-      </li>
-      <li class="page-item can-click">
-        <span class="page-link" (click)="nextPage()">Next</span>
-      </li>
-    </ul>
-  </nav>
-  <span class="total-page">of {{ postsData.totalPages }}</span>
+<div *ngIf="postsData.posts.length == 0; else home_content">
+  <div class="d-flex justify-content-center loading">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
 </div>
 
-<div *ngFor="let post of postsData.posts" class="post">
-  <h1>{{ post.title }}</h1>
-  <div>
-    <span>Post by BaoThanhNien có </span>
-    <span class="total-comments"> {{ post.totalComments || "0" }} </span>
-    lượt <span class="total-comments">bình luận</span>
+<ng-template #home_content>
+  <div class="d-flex justify-content-center pt-4">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item">
+          <span class="page-link can-click" (click)="previousPage()"
+            >Previous</span
+          >
+        </li>
+        <li class="page-item">
+          <input
+            type="number"
+            class="form-control input-page-index"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            [value]="currentPage"
+            (change)="changePage($event)"
+          />
+        </li>
+        <li class="page-item can-click">
+          <span class="page-link" (click)="nextPage()">Next</span>
+        </li>
+      </ul>
+    </nav>
+    <span class="total-page">of {{ postsData.totalPages }}</span>
   </div>
-  <div class="summary">{{ post.summary }}</div>
-  <hr />
 
-  <div *ngFor="let comment of post.comments" class="comment">
-    <div class="author">{{ comment.author }}</div>
-    <div class="comment-content">{{ comment.content }}</div>
-    <div class="likes">
-      <span class="number">{{ comment.numberLike }}</span>
-      <span class="material-icons"> thumb_up </span>
+  <div *ngFor="let post of postsData.posts" class="post">
+    <h1>{{ post.title }}</h1>
+    <div>
+      <span>Post by BaoThanhNien có </span>
+      <span class="total-comments"> {{ post.totalComments || "0" }} </span>
+      lượt <span class="total-comments">bình luận</span>
+    </div>
+    <div class="summary">{{ post.summary }}</div>
+    <hr />
+
+    <div *ngFor="let comment of post.comments" class="comment">
+      <div class="author">{{ comment.author }}</div>
+      <div class="comment-content">{{ comment.content }}</div>
+      <div class="likes">
+        <span class="number">{{ comment.numberLike }}</span>
+        <span class="material-icons"> thumb_up </span>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="d-flex justify-content-center pt-4 pb-4">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item">
-        <span class="page-link can-click" (click)="previousPage()"
-          >Previous</span
-        >
-      </li>
-      <li class="page-item">
-        <input
-          type="number"
-          class="form-control input-page-index"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          [value]="currentPage"
-          (change)="changePage()"
-        />
-      </li>
-      <li class="page-item can-click">
-        <span class="page-link" (click)="nextPage()">Next</span>
-      </li>
-    </ul>
-  </nav>
-  <span class="total-page">of {{ postsData.totalPages }}</span>
-</div>
+  <div class="d-flex justify-content-center pt-4 pb-4">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item">
+          <span class="page-link can-click" (click)="previousPage()"
+            >Previous</span
+          >
+        </li>
+        <li class="page-item">
+          <input
+            type="number"
+            class="form-control input-page-index"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            [value]="currentPage"
+            (change)="changePage($event)"
+          />
+        </li>
+        <li class="page-item can-click">
+          <span class="page-link" (click)="nextPage()">Next</span>
+        </li>
+      </ul>
+    </nav>
+    <span class="total-page">of {{ postsData.totalPages }}</span>
+  </div>
+</ng-template>

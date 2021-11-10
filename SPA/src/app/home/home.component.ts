@@ -9,12 +9,11 @@ import appSetting from '../appsetting';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  currentPage: number = 1;
   postsData: GetPostsDto = {
     posts: [] as Post[],
     totalPages: 0,
   };
-
-  currentPage: number = 1;
 
   constructor(private service: BlogService) {}
 
@@ -38,8 +37,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  changePage(pageInput: string): void {
-    const pageNumber = parseInt(pageInput);
+  changePage(event: any): void {
+    const pageNumber = parseInt(event.target.value);
     if (pageNumber > 0 && pageNumber <= this.postsData.totalPages)
       this.currentPage = pageNumber;
     this.getPosts();

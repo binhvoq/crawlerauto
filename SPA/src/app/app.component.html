@@ -3,10 +3,19 @@
 
   <div class="toolbar-spacer"></div>
 
-  <a mat-button [routerLink]="['todo-view']">Update data</a>
-  
-  <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
-  <button mat-raised-button color="accent" *ngIf="loginDisplay" (click)="logout()">Logout</button>
+  <a class="update-data" mat-button [routerLink]="['todo-view']">Update data</a>
+
+  <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">
+    Login
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="loginDisplay"
+    (click)="logout()"
+  >
+    Logout
+  </button>
 </mat-toolbar>
 <div class="container">
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->

@@ -11,3 +11,8 @@ a.title {
   text-align: center;
   flex: 1 1 auto;
 }
+
+.update-data:hover {
+  color: white;
+  text-decoration: underline;
+}
