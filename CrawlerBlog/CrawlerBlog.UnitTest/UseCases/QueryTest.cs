@@ -51,11 +51,14 @@ namespace CrawlerBlog.UnitTest.UseCases
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                //Act
-                var service = new GetPostsHandler(context, _mockLogger.Object);
-                var result = await service.Handle(new GetPostsQuery { pageIndex = 1, pageSize = 1 }, It.IsAny<CancellationToken>());
-                //Assert
+                //Arrange
+                GetPostsQuery getPostsQuery = new GetPostsQuery { pageIndex = 1, pageSize = 2 };
 
+                //Act
+               var service = new GetPostsHandler(context, _mockLogger.Object);
+               var result = await service.Handle(getPostsQuery, It.IsAny<CancellationToken>());
+                
+                //Assert
                 Assert.NotNull(result);
             }        
         }
@@ -66,7 +69,6 @@ namespace CrawlerBlog.UnitTest.UseCases
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-
                 context.Posts.Add(new Post { cmtId = "1", comments = new List<Comment>(), id = "1", summary = "dsf", title = "asdf", totalComments = "10", uri = "uri" });
                 context.Posts.Add(new Post { cmtId = "2", comments = new List<Comment>(), id = "2", summary = "avef", title = "jrj", totalComments = "10", uri = "uri" });
                 context.SaveChanges();
