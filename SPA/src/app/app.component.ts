@@ -2,15 +2,24 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
-import { InteractionType, InteractionStatus, PopupRequest, RedirectRequest, AuthenticationResult } from '@azure/msal-browser';
-
-import { b2cPolicies } from './auth-config';
+import {
+  MsalService,
+  MsalBroadcastService,
+  MSAL_GUARD_CONFIG,
+  MsalGuardConfiguration,
+} from '@azure/msal-angular';
+import {
+  InteractionType,
+  InteractionStatus,
+  PopupRequest,
+  RedirectRequest,
+  AuthenticationResult,
+} from '@azure/msal-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Crawler Blog';
@@ -32,13 +41,15 @@ export class AppComponent implements OnInit, OnDestroy {
      * visit: https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-angular/docs/v2-docs/events.md
      */
     this.msalBroadcastService.inProgress$
-    .pipe(
-      filter((status: InteractionStatus) => status === InteractionStatus.None),
-      takeUntil(this._destroying$)
-    )
-    .subscribe(() => {
-      this.setLoginDisplay();
-    });
+      .pipe(
+        filter(
+          (status: InteractionStatus) => status === InteractionStatus.None
+        ),
+        takeUntil(this._destroying$)
+      )
+      .subscribe(() => {
+        this.setLoginDisplay();
+      });
   }
 
   setLoginDisplay() {
@@ -48,19 +59,27 @@ export class AppComponent implements OnInit, OnDestroy {
   login(userFlowRequest?: RedirectRequest | PopupRequest) {
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       if (this.msalGuardConfig.authRequest) {
-        this.authService.loginPopup({...this.msalGuardConfig.authRequest, ...userFlowRequest} as PopupRequest)
+        this.authService
+          .loginPopup({
+            ...this.msalGuardConfig.authRequest,
+            ...userFlowRequest,
+          } as PopupRequest)
           .subscribe((response: AuthenticationResult) => {
             this.authService.instance.setActiveAccount(response.account);
           });
       } else {
-        this.authService.loginPopup(userFlowRequest)
+        this.authService
+          .loginPopup(userFlowRequest)
           .subscribe((response: AuthenticationResult) => {
             this.authService.instance.setActiveAccount(response.account);
           });
       }
     } else {
-      if (this.msalGuardConfig.authRequest){
-        this.authService.loginRedirect({...this.msalGuardConfig.authRequest, ...userFlowRequest} as RedirectRequest);
+      if (this.msalGuardConfig.authRequest) {
+        this.authService.loginRedirect({
+          ...this.msalGuardConfig.authRequest,
+          ...userFlowRequest,
+        } as RedirectRequest);
       } else {
         this.authService.loginRedirect(userFlowRequest);
       }
